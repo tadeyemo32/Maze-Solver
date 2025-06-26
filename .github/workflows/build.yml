@@ -16,15 +16,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install dependencies on Ubuntu
+      - name: Install raylib on Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y build-essential libraylib-dev
+          sudo apt install -y libraylib-dev
 
       - name: Install dependencies on Windows
         if: runner.os == 'Windows'
         run: choco install make
 
-      - name: Build with Makefile
+      - name: Build project
         run: make
