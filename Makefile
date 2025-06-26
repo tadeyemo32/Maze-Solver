@@ -19,4 +19,12 @@ ifeq ($(OS),Windows_NT)
     CC = gcc
     CFLAGS += -I./raylib/include
     LDFLAGS = -L./raylib/lib
-    LIBS = -lraylib -lope
+    LIBS = -lraylib -lopengl32 -lgdi32 -lwinmm
+    OUT := main.exe
+endif
+
+$(OUT): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $(OUT) $(LDFLAGS) $(LIBS)
+
+clean:
+	rm -f $(OUT)
