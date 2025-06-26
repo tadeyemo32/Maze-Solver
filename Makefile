@@ -5,7 +5,7 @@ CFLAGS := -Wall -Wextra -std=c17 -Iinclude
 SRCDIR := src
 INCDIR := include
 BINDIR := bin
-TARGET := $(BINDIR)/maze_solver
+TARGET := $(BINDIR)/main
 
 SRC := $(wildcard $(SRCDIR)/*.c)
 OBJ := $(SRC:$(SRCDIR)/%.c=$(BINDIR)/%.o)
