@@ -17,6 +17,7 @@ int main(void) {
         BeginDrawing();
         ClearBackground(LIGHTGRAY);
         draw_grid();
+        
         EndDrawing();
     }
 

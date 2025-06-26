@@ -6,6 +6,8 @@
 int SCREEN_W = 800;
 int SCREEN_H = 800;
 int plays = 0;
+Vector2 start; 
+Vector2 goal; 
 
 int gridSize = 800/GRID_ROWS;
 
@@ -51,35 +53,52 @@ void draw_grid() {
     }
 
      for (int i = 0; i <= GRID_ROWS; i++) {
-        DrawLine(0, i * gridSize, SCREEN_W, i * gridSize, RAYWHITE); // horizontal
+        DrawLine(0, i * gridSize, SCREEN_W, i * gridSize, RAYWHITE); 
     }
     for (int j = 0; j <= GRID_COLS; j++) {
-        DrawLine(j * gridSize, 0, j * gridSize, SCREEN_H, RAYWHITE); // vertical
+        DrawLine(j * gridSize, 0, j * gridSize, SCREEN_H, RAYWHITE); 
     }
 }
 
-void handle_mouse_input() {
-    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-        Vector2 mouse = GetMousePosition();
-        int col = mouse.x / gridSize;
-        int row = mouse.y / gridSize;
 
-        // Bounds check to avoid crashing when clicking outside the grid
-        if (row >= 0 && row < GRID_ROWS && col >= 0 && col < GRID_COLS) {
-            if (grid[row][col] != CELL_WALL) {
-                if (plays == 0) {
-                    grid[row][col] = CELL_START;
-                    plays++;
-                } else if (plays == 1) {
-                    grid[row][col] = CELL_GOAL;
-                    plays++;
-                } else {
-                    grid[row][col] = CELL_PATH;
-                }
-            } else {
-                printf("Cannot change walls\n");
+void handle_mouse_input() {
+    Vector2 mouse = GetMousePosition();
+    int col = mouse.x / gridSize;
+    int row = mouse.y / gridSize;
+
+    if (row >= 0 && row < GRID_ROWS && col >= 0 && col < GRID_COLS) {
+        pathType current = grid[row][col];
+
+        // Prevent editing walls
+        if (current == CELL_WALL) {
+            printf("Cannot change walls\n");
+            return;
+        }
+
+        // First click → place start
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && plays == 0) {
+            grid[row][col] = CELL_START;
+            start.x = col;
+            start.y = row;
+            plays++;
+        }
+
+        // Second click → place goal
+        else if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && plays == 1) {
+            // Prevent placing goal on the start
+            if (grid[row][col] != CELL_START) {
+                grid[row][col] = CELL_GOAL;
+                goal.x = col;
+                goal.y = row;
+                plays++;
+            }
+        }
+
+        // After start and goal set → draw path
+        else if (plays >= 2 && IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            if (current == CELL_EMPTY) {
+                grid[row][col] = CELL_PATH;
             }
         }
     }
 }
-

@@ -5,7 +5,8 @@
 extern int SCREEN_W;
 extern int SCREEN_H;
 extern int plays ; 
-
+extern Vector2 start ; 
+extern Vector2 goal ; 
 
 #define GRID_ROWS 20
 #define GRID_COLS 20
