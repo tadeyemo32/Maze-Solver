@@ -1,0 +1,13 @@
+# Ignore compiled object files and binaries
+/bin/
+/*.o
+*.out
+*.exe
+
+# Ignore backup and temporary files
+*~
+*.swp
+.DS_Store
+
+# Ignore Raylib caches (if using)
+*.rlib
