@@ -16,15 +16,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install raylib on Linux
+      - name: Install Raylib on Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y libraylib-dev
+          sudo apt install -y build-essential cmake git libgl1-mesa-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev libpulse-dev libopenal-dev
+          git clone https://github.com/raysan5/raylib.git
+          cd raylib
+          mkdir build && cd build
+          cmake ..
+          make -j$(nproc)
+          sudo make install
+
+      - name: Install dependencies on macOS
+        if: runner.os == 'macOS'
+        run: brew install raylib
 
       - name: Install dependencies on Windows
         if: runner.os == 'Windows'
-        run: choco install make
+        run: |
+          choco install make
+          # NOTE: You must manually provide raylib include/lib folders in your repo under ./raylib
 
-      - name: Build project
+      - name: Build with Makefile
         run: make
