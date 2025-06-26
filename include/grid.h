@@ -4,6 +4,7 @@
 #include "raylib.h"
 extern int SCREEN_W;
 extern int SCREEN_H;
+extern int plays ; 
 
 
 #define GRID_ROWS 20

@@ -12,6 +12,8 @@ int main(void) {
     InitAudioDevice();
 
     while (!WindowShouldClose()) {
+        handle_mouse_input();
+
         BeginDrawing();
         ClearBackground(LIGHTGRAY);
         draw_grid();
@@ -19,5 +21,5 @@ int main(void) {
     }
 
     CloseWindow();   
-    return 0;
+
 }
