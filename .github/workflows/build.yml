@@ -6,6 +6,7 @@ on:
 
 jobs:
   build:
+    timeout-minutes: 10
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
@@ -13,27 +14,23 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Linux: Build Raylib from source
       - name: Install Raylib on Linux
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y gcc make libgl1-mesa-dev libx11-dev libxcursor-dev libxi-dev libxrandr-dev libxinerama-dev libxxf86vm-dev libopenal-dev
+          sudo apt install -y build-essential cmake libgl1-mesa-dev libx11-dev libxcursor-dev libxi-dev libxrandr-dev libxinerama-dev libxxf86vm-dev libopenal-dev
           git clone https://github.com/raysan5/raylib.git
-          cd raylib/src
-          make PLATFORM=PLATFORM_DESKTOP
+          mkdir raylib/build && cd raylib/build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          make -j$(nproc)
           sudo make install
 
-      # macOS: Use Homebrew
       - name: Install Raylib on macOS
         if: runner.os == 'macOS'
-        run: |
-          brew install raylib
+        run: brew install raylib
 
-      # Windows: Download Raylib binary
       - name: Set up Raylib on Windows
         if: runner.os == 'Windows'
         run: |
@@ -45,6 +42,5 @@ jobs:
           copy .\raylib-5.0_win64_msvc16\include\* .\raylib\include\
           copy .\raylib-5.0_win64_msvc16\lib\* .\raylib\lib\
 
-      # Build
-      - name: Build with Make
+      - name: Build Project
         run: make
