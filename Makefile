@@ -23,7 +23,6 @@ ifeq ($(OS),Windows_NT)
     OUT := main.exe
 endif
 
-
 $(OUT): $(SRC)
 	$(CC) $(CFLAGS) $(SRC) -o $(OUT) $(LDFLAGS) $(LIBS)
 

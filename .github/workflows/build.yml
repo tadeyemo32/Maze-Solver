@@ -8,7 +8,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-22.04, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -16,27 +16,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Raylib on Linux
+      - name: Install Raylib (Linux)
         if: runner.os == 'Linux'
         run: |
+          sudo add-apt-repository ppa:game-dev/ppa -y
           sudo apt update
-          sudo apt install -y build-essential cmake git libgl1-mesa-dev libx11-dev libxcursor-dev libxrandr-dev libxi-dev libasound2-dev libpulse-dev libopenal-dev
-          git clone https://github.com/raysan5/raylib.git
-          cd raylib
-          mkdir build && cd build
-          cmake ..
-          make -j$(nproc)
-          sudo make install
+          sudo apt install -y libraylib-dev
 
-      - name: Install dependencies on macOS
-        if: runner.os == 'macOS'
-        run: brew install raylib
-
-      - name: Install dependencies on Windows
+      - name: Set up Raylib (Windows)
         if: runner.os == 'Windows'
         run: |
-          choco install make
-          # NOTE: You must manually provide raylib include/lib folders in your repo under ./raylib
+          mkdir raylib/include
+          mkdir raylib/lib
+          curl -LO https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip
+          powershell -Command "Expand-Archive -Path raylib-5.0_win64_msvc16.zip -DestinationPath ."
+          cp raylib-5.0_win64_msvc16/include/raylib.h raylib/include/
+          cp raylib-5.0_win64_msvc16/lib/raylib.lib raylib/lib/
+          cp raylib-5.0_win64_msvc16/lib/raylib.dll raylib/lib/
 
-      - name: Build with Makefile
+      - name: Build
         run: make
