@@ -1,15 +1,23 @@
-#include <stdlib.h> 
+#include <stdlib.h>
 #include <stdio.h>
-#include "cJSON.h"
+#include "raylib.h"
+#include "grid.h"
 
 
+int main(void) {
+    init_grid();
 
-int main(){
+    SetConfigFlags(FLAG_WINDOW_HIGHDPI);  
+    InitWindow(SCREEN_W, SCREEN_H, "Maze");
+    InitAudioDevice();
 
+    while (!WindowShouldClose()) {
+        BeginDrawing();
+        ClearBackground(LIGHTGRAY);
+        draw_grid();
+        EndDrawing();
+    }
 
-
-
-
-return 0;
-
+    CloseWindow();   
+    return 0;
 }

@@ -1,14 +1,19 @@
 #ifndef GRID_H
 #define GRID_H
+
 #include "raylib.h"
+extern int SCREEN_W;
+extern int SCREEN_H;
+
+
 #define GRID_ROWS 20
 #define GRID_COLS 20
 
 typedef enum {
-    CELL_EMPTY,// emoty 
-    CELL_WALL,// no path
-    CELL_START,// start 
-    CELL_GOAL,// goal
+    CELL_EMPTY, // emoty 
+    CELL_WALL, // no path
+    CELL_START, // start 
+    CELL_GOAL, // goal
     CELL_PATH //movable path
 } pathType;
 
