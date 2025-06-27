@@ -2,7 +2,7 @@
 
 An interactive maze builder and solver built with **Raylib** in C, using **Breadth-First Search (BFS)** to find and visualize the shortest path in a 2D grid.
 
-<img src="screenshots/maze-preview.png" width="500"/>
+<img src="assets/3.png" width="500"/>
 
 ---
 
@@ -75,6 +75,11 @@ It’s a hands-on example of combining **algorithmic logic** with **low-level gr
 | Restart Maze      | Bottom-left button  |
 
 ---
+
+## To-Do
+
+- testing 
+- cross platform support
 
 
 
