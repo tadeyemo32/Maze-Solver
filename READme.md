@@ -1,4 +1,4 @@
-# 🧩 Maze Solver in C (with Raylib + cJSON)
+#  Maze Solver in C (with Raylib + cJSON)
 
 An interactive maze builder and solver built with **Raylib** in C, using **Breadth-First Search (BFS)** to find and visualize the shortest path in a 2D grid.
 
@@ -6,7 +6,7 @@ An interactive maze builder and solver built with **Raylib** in C, using **Bread
 
 ---
 
-## 🧠 About the Project
+##  About the Project
 
 This project is an educational tool and demonstration of how to:
 
@@ -22,16 +22,16 @@ It’s a hands-on example of combining **algorithmic logic** with **low-level gr
 
 ## 🔧 Features
 
-- ✅ Mouse-based maze builder
-- ✅ Place **start**, **goal**, and **walls**
-- ✅ Visual BFS with:
+-  Mouse-based maze builder
+- Place **start**, **goal**, and **walls**
+-  Visual BFS with:
   - **Visited cells** (gray)
   - **Best path** (yellow)
-- ✅ Menu system with:
+- Menu system with:
   - Save to JSON
   - Load from JSON
   - Reset maze
-- ✅ Full pause when menu is open
+- Full pause when menu is open
 
 ---
 
@@ -48,7 +48,7 @@ It’s a hands-on example of combining **algorithmic logic** with **low-level gr
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 ### 🟩 Start and Goal Placement  
 <img src="assets/1.png" width="400"/>
