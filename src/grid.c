@@ -48,6 +48,8 @@ void draw_grid() {
                 case CELL_GOAL:  color = RED; break;
                 case CELL_PATH:  color = BLUE; break;
                 case CELL_UNMOVABLE_PATH: color = BLACK;break;
+                case CELL_VISITED: color = PURPLE;break;
+                case CELL_TRACE : color = YELLOW;
             }
 
             DrawRectangle(col * gridSize, row * gridSize, gridSize, gridSize, color);

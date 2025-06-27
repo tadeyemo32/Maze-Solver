@@ -10,6 +10,7 @@
 typedef struct Node {
     Vector2 pos;
     struct Node* next;
+ 
     
 } Node;
 
