@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "raylib.h"
+#include "bfs.h"
 #define CELL_SIZE 10
 int SCREEN_W = 800;
 int SCREEN_H = 800;
@@ -46,6 +47,7 @@ void draw_grid() {
                 case CELL_START: color = GREEN; break;
                 case CELL_GOAL:  color = RED; break;
                 case CELL_PATH:  color = BLUE; break;
+                case CELL_UNMOVABLE_PATH: color = BLACK;break;
             }
 
             DrawRectangle(col * gridSize, row * gridSize, gridSize, gridSize, color);
@@ -61,7 +63,8 @@ void draw_grid() {
 }
 
 
-void handle_mouse_input() {
+
+   void handle_mouse_input() {
     Vector2 mouse = GetMousePosition();
     int col = mouse.x / gridSize;
     int row = mouse.y / gridSize;
@@ -71,33 +74,47 @@ void handle_mouse_input() {
 
         // Prevent editing walls
         if (current == CELL_WALL) {
-            printf("Cannot change walls\n");
             return;
         }
 
         // First click → place start
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && plays == 0) {
             grid[row][col] = CELL_START;
+
+            // ✅ Set start position before creating the node
             start.x = col;
             start.y = row;
+
+            head = createNode(start);
+            
+            printf("Start at: x:%d y:%d\n", (int)head->pos.x, (int)head->pos.y);
+            
+
             plays++;
         }
 
         // Second click → place goal
         else if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && plays == 1) {
-            // Prevent placing goal on the start
             if (grid[row][col] != CELL_START) {
                 grid[row][col] = CELL_GOAL;
+
+                // ✅ Set goal position before creating the node
                 goal.x = col;
                 goal.y = row;
+
+                GOAL = createNode(goal);
+                if (GOAL != NULL) {
+                    printf("Goal at: x:%d y:%d\n", (int)GOAL->pos.x, (int)GOAL->pos.y);
+                }
+
                 plays++;
             }
         }
 
-        // After start and goal set → draw path
+        // After both are set → draw additional path tiles
         else if (plays >= 2 && IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
             if (current == CELL_EMPTY) {
-                grid[row][col] = CELL_PATH;
+                grid[row][col] = CELL_UNMOVABLE_PATH;
             }
         }
     }

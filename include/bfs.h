@@ -1,3 +1,4 @@
+// bfs.h
 #ifndef BFS_H
 #define BFS_H
 
@@ -5,18 +6,24 @@
 #include "raylib.h"
 #include <stdbool.h>
 
-// Define Node structure for BFS
-typedef struct {
+// Proper typedef for Node
+typedef struct Node {
     Vector2 pos;
+    struct Node* next;
+    
 } Node;
 
-// Queue operations
-void enQueue(Node node);    
-Node deQueue(void);           // Remove and return a node from the queue
-bool isQueueEmpty(void);      // Check if queue is empty
-void resetQueue(void);        // Optional: Reset queue before a new BFS
+// Global queue state (if used globally)
+extern Node* head;
+extern Node* GOAL;
+extern int queueCount;
 
-// BFS function for a grid
-bool bfs(Vector2 start, Vector2 goal);
+// Function declarations
+Node* createNode(Vector2 pos);
+bool enQueue(Node* node);
+bool deQueue(void);
+bool isQueueEmpty(void);
+void resetQueue();
+bool bfs();
 
 #endif // BFS_H

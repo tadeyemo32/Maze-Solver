@@ -16,7 +16,8 @@ typedef enum {
     CELL_WALL, // no path
     CELL_START, // start 
     CELL_GOAL, // goal
-    CELL_PATH //movable path
+    CELL_PATH ,//movable path
+    CELL_UNMOVABLE_PATH,
 } pathType;
 
 extern pathType grid[GRID_ROWS][GRID_COLS];
